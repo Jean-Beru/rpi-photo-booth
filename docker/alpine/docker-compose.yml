@@ -2,6 +2,6 @@ app:
     build: .
     container_name: rpi_photo_booth
     volumes:
-        - .:/src/
+        - ../..:/app
     ports:
         - "3000:3000"

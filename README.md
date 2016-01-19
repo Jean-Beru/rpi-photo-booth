@@ -10,18 +10,21 @@ git clone SOON...
 cd take-a-pic
 
 # Install dependencies
-docker-compose run --rm app npm install
+docker-compose -f docker/alpine/docker-compose.yml run --rm app npm install
 
 # Run server
-docker-compose up -d
+docker-compose -f docker/alpine/docker-compose.yml  up -d
 ```
 
 # Develop on Take-a-pic
 
 ```sh
 # Run a shell in Docker
-dc run --rm --service-ports app /bin/sh
+docker-compose -f docker/alpine/docker-compose.yml  run --rm --service-ports app /bin/sh
 
 # Emulate camera
-dc run --rm  app node stream_faker.js
+docker-compose -f docker/alpine/docker-compose.yml  run --rm  app node stream_faker.js
 ```
+
+# Note
+Change `docker/alpine/docker-compose.yml` to `docker/hypriot/docker-compose.yml` for RPI installation.
