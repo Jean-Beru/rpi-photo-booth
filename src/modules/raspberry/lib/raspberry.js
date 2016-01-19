@@ -2,7 +2,6 @@ var winston  = require('winston');
 var cp       = require('child_process');
 var chokidar = require('chokidar');
 var extend   = require('extend');
-var fs       = require('fs');
 
 var options = {
     stream: {

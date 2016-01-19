@@ -8,14 +8,14 @@ var args = argv
             short: 'o',
             type: 'string',
             description: 'Defines output file',
-            example: "'faker --output=my_file' or 'faker -o my_file'"
+            example: 'faker -o my_file'
         },
         {
             name: 'timelapse',
             short: 't',
             type: 'int',
             description: 'Timelapse in ms',
-            example: "'faker --timelapse=100' or 'faker -t 100'"
+            example: 'faker -t 100'
         }
     ])
     .run();
