@@ -1,0 +1,7 @@
+{
+  "mode": "production",
+  "port": 5000,
+  "secret": "thisIsMySecret",
+  "locales": ["en", "fr"],
+  "cookieName": "cookieName"
+}

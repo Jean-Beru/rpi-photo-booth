@@ -1,0 +1,18 @@
+h3 {
+    font-size: 1.2em;
+}
+
+.wrapper {
+    display: flex;
+}
+    .wrapper .webcam {
+        flex-grow: 1;
+    }
+        .wrapper .webcam img {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+    .wrapper .last {
+        width: 500px;
+    }

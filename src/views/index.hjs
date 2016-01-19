@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io();
+            socket.on('stream', function(url) {
+                document.getElementById('stream').src = url;
+            });
+        </script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="webcam">
+                <img src="" id="stream" />
+            </div>
+            <div class="last">
+                <h3>{{#__}}last_photos{{/__}}</h3>
+                <ul>
+                    <li>ICI</li>
+                    <li>ICI</li>
+                    <li>ICI</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>
