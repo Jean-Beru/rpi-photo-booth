@@ -20,15 +20,18 @@ var args = argv
     ])
     .run();
 
-var current = 0;
-var files = fs.readdirSync(__dirname + '/stream');
-
-setInterval(
-    function() {
-        fs
-            .createReadStream(__dirname + '/stream/' + files[current])
-            .pipe(fs.createWriteStream(args.options.output));
-        current = ++current === files.length ? 0 : current ;
-    },
-    500
+fs.readdir(
+    __dirname + '/stream',
+    function(err, files) {
+        var current = 0;
+        setInterval(
+            function() {
+                fs
+                    .createReadStream(__dirname + '/stream/' + files[current])
+                    .pipe(fs.createWriteStream(args.options.output));
+                current = ++current === files.length ? 0 : current ;
+            },
+            args.options.timelapse
+        );
+    }
 );

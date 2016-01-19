@@ -6,8 +6,8 @@
         <script src="/socket.io/socket.io.js"></script>
         <script>
             var socket = io();
-            socket.on('stream', function(url) {
-                document.getElementById('stream').src = url;
+            socket.on('stream', function(data) {
+                document.getElementById('stream').src = 'data:image/jpeg;base64,' + data.stream;
             });
         </script>
     </head>

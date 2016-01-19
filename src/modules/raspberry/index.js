@@ -1,1 +1,1 @@
-module.exports = require('./lib/raspberry');
+module.exports = require('./raspberry.js');

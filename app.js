@@ -64,8 +64,10 @@ var sockets = {};
 io.on('connection', function(socket) {
     sockets[socket.id] = socket;
 
-    raspberry.stream.start(function() {
-        io.emit('stream', this.getUri() + '?' + (new Date().getTime()));
+    raspberry.stream.start(function(path) {
+        fs.readFile(path, function(err, data) {
+            io.emit('stream', { stream: data.toString('base64') });
+        });
     });
 
     socket.on('disconnect', function() {

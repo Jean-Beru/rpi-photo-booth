@@ -5,11 +5,10 @@ var extend   = require('extend');
 
 var options = {
     stream: {
-        folder: process.cwd() + '/public/stream/',
-        uri: '/stream/',
-        filename: 'caption.jpg',
+        path: process.cwd() + '/stream/caption.jpg',
         width: 640,
-        height: 480
+        height: 480,
+        timelapse: 1000,
     }
 };
 
@@ -21,40 +20,37 @@ module.exports.stream = {
         options = extend(options.stream, opt);
     },
     getPath: function() {
-        return options.stream.folder + options.stream.filename;
-    },
-    getUri: function() {
-        return options.stream.uri + options.stream.filename;
+        return options.stream.path;
     },
     start: function(callback) {
+        var path = this.getPath();
+
         if (watcher) {
-            callback.call(this);
+            callback.call(this, path);
             return;
         }
-
-        var path = this.getPath();
 
         proc = cp.spawn('raspistill', [
             '-w', options.stream.width,
             '-h', options.stream.height,
             '-o', path,
             '-t', '999999999',
-            '-tl', '100'
+            '-tl', options.stream.timelapse
         ]);
         proc.on('error', function() {
             winston.warn('raspistill not available, using faker');
-            proc = cp.fork(__dirname + '/faker', [
+            proc = cp.fork(__dirname + '/../faker', [
                 '-o', path,
-                '-t', '100'
+                '-t', options.stream.timelapse
             ]);
         });
 
-        winston.info('Watching for changes on ' + this.getPath() + '...');
+        winston.info('Watching for changes on ' + path + '...');
 
-        watcher = chokidar.watch(this.getPath());
+        watcher = chokidar.watch(path);
         watcher
-            .on('add', callback.bind(this))
-            .on('change', callback.bind(this));
+            .on('add', callback.bind(this, path))
+            .on('change', callback.bind(this, path));
     },
     stop: function() {
         if (proc) {
