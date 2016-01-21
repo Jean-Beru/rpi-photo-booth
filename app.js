@@ -66,7 +66,9 @@ io.on('connection', function(socket) {
 
     raspberry.stream.start(function(path) {
         fs.readFile(path, function(err, data) {
-            io.emit('stream', { stream: data.toString('base64') });
+            if ('' !== data) {
+                io.emit('stream', { stream: data.toString('base64') });
+            }
         });
     });
 

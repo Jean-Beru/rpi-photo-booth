@@ -1,18 +1,60 @@
+body {
+    background-color: #eee;
+}
+
 h3 {
     font-size: 1.2em;
 }
 
-.wrapper {
-    display: flex;
+#webcam {
+    border: 5px solid white;
+    border-bottom-width: 100px;
+    float: left;
+    position: relative;
 }
-    .wrapper .webcam {
-        flex-grow: 1;
+    #webcam img {
+        z-index: 10;
     }
-        .wrapper .webcam img {
-            display: block;
-            height: 100%;
-            width: 100%;
+    #webcam .wrapper {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    #webcam .wrapper #countdown {
+        background-color: rgba(40,40,40, .5);
+        border-radius: 100%;
+        border: 10px solid #fff;
+        color: white;
+        display: none;
+        font-family: arial;
+        font-size: 250px;
+        height: 300px;
+        line-height: 300px;
+        text-align: center;
+        width: 300px;
+        z-index: 20;
+    }
+
+.last {
+    float: left;
+    padding: 20px;
+    width: 700px;
+}
+    .last ul {
+        list-style: none;
+        padding: 0;
+    }
+        .last ul li {
+            display: inline-block;
         }
-    .wrapper .last {
-        width: 500px;
-    }
+            .last ul li img {
+                border: 5px solid #fff;
+                height: 120px;
+                width: 160px;
+            }

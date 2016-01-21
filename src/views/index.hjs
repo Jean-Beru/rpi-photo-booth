@@ -4,26 +4,64 @@
         <title>{{ title }}</title>
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
         <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <div id="webcam">
+            <img src="" id="stream" />
+            <div class="wrapper">
+                <div id="countdown"></div>
+            </div>
+        </div>
+        <div class="last">
+            <h3>
+                {{#__}}last_photos{{/__}}
+                <button id="shot">Shot!</button>
+            </h3>
+            <ul>
+                <li><img src="http://lorempixel.com/160/120/people/1"></li>
+                <li><img src="http://lorempixel.com/160/120/people/2"></li>
+                <li><img src="http://lorempixel.com/160/120/people/3"></li>
+                <li><img src="http://lorempixel.com/160/120/people/4"></li>
+                <li><img src="http://lorempixel.com/160/120/people/5"></li>
+                <li><img src="http://lorempixel.com/160/120/people/6"></li>
+                <li><img src="http://lorempixel.com/160/120/people/7"></li>
+                <li><img src="http://lorempixel.com/160/120/people/8"></li>
+                <li><img src="http://lorempixel.com/160/120/people/9"></li>
+                <li><img src="http://lorempixel.com/160/120/people/10"></li>
+                <li><img src="http://lorempixel.com/160/120/people/11"></li>
+                <li><img src="http://lorempixel.com/160/120/people/12"></li>
+            </ul>
+        </div>
         <script>
             var socket = io();
             socket.on('stream', function(data) {
-                document.getElementById('stream').src = 'data:image/jpeg;base64,' + data.stream;
+                var stream = document.getElementById('stream');
+                stream.src = 'data:image/jpeg;base64,' + data.stream;
+
+                var webcam = document.getElementById('webcam');
+                webcam.style.height = Math.max(+webcam.style.height, stream.offsetHeight) + 'px';
+                webcam.style.width = Math.max(+webcam.style.width, stream.offsetWidth) + 'px';
             });
+
+            var countdown, interval;
+            function showCountdown() {
+                if (0 === countdown) {
+                    document.getElementById('countdown').style.display = 'none';
+                    clearInterval(interval);
+                    //socket.emit('shot');
+                    alert('SHOT!!!!!');
+                } else {
+                    document.getElementById('countdown').innerHTML = countdown;
+                    document.getElementById('countdown').style.display = 'block';
+                }
+                countdown--;
+            }
+
+            document.getElementById('shot').onclick = function() {
+                countdown = 5;
+                showCountdown();
+                interval = setInterval(showCountdown, 1000);
+            };
         </script>
-    </head>
-    <body>
-        <div class="wrapper">
-            <div class="webcam">
-                <img src="" id="stream" />
-            </div>
-            <div class="last">
-                <h3>{{#__}}last_photos{{/__}}</h3>
-                <ul>
-                    <li>ICI</li>
-                    <li>ICI</li>
-                    <li>ICI</li>
-                </ul>
-            </div>
-        </div>
     </body>
 </html>
