@@ -24,22 +24,93 @@ h3 {
         position: absolute;
         top: 0;
         width: 100%;
-    }
-
-    #webcam .wrapper #countdown {
-        background-color: rgba(40,40,40, .5);
-        border-radius: 100%;
-        border: 10px solid #fff;
-        color: white;
-        display: none;
-        font-family: arial;
-        font-size: 250px;
-        height: 300px;
-        line-height: 300px;
-        text-align: center;
-        width: 300px;
         z-index: 20;
     }
+        #webcam .wrapper #countdown {
+            display: none;
+            height: 300px;
+            position: relative;
+            width: 300px;
+        }
+        #webcam .wrapper #countdown.start {
+            display: block;
+        }
+
+            #webcam .wrapper #countdown #countdown_text {
+                color: #fff;
+                font-family: arial;
+                font-size: 250px;
+                height: 300px;
+                left: 0;
+                line-height: 300px;
+                padding: 10px;
+                position: absolute;
+                text-align: center;
+                top: 0;
+                width: 300px;
+            }
+
+            #webcam .wrapper #countdown .timer {
+                background-color: rgba(40,40,40, .5);
+                border: 5px solid #fff;
+                border-radius: 50%;
+                height: 300px;
+                overflow: hidden;
+                width: 300px;
+            }
+                #webcam .wrapper #countdown .timer .hand {
+                    float: left;
+                    height: 100%;
+                    overflow: hidden;
+                    position: relative;
+                    width: 50%;
+                }
+
+                    #webcam .wrapper #countdown .timer .hand span {
+                        animation-duration: 0;
+                        animation-iteration-count: infinite;
+                        animation-timing-function: linear;
+                        border: 150px solid rgba(80, 80, 80, .4);
+                        border-bottom-color: transparent;
+                        border-left-color: transparent;
+                        border-radius: 50%;
+                        display: block;
+                        height: 0;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        transform: rotate(225deg);
+                        width: 0;
+                    }
+
+                    #webcam .wrapper #countdown.start .timer .hand span {
+                        animation-duration: 1s;
+                    }
+
+                #webcam .wrapper #countdown .timer .hand:nth-child(1) {
+                    transform: rotate(180deg);
+                }
+
+                    #webcam .wrapper #countdown .timer .hand:nth-child(1) span {
+                        animation-name: spin1;
+                    }
+
+                    #webcam .wrapper #countdown .timer .hand:nth-child(2) span {
+                        animation-name: spin2;
+                    }
+
+                    @keyframes spin1 {
+                        0%   {transform: rotate(225deg);}
+                        50%  {transform: rotate(225deg);}
+                        100% {transform: rotate(405deg);}
+                    }
+
+                    @keyframes spin2 {
+                        0%   {transform: rotate(225deg);}
+                        50%  {transform: rotate(405deg);}
+                        100% {transform: rotate(405deg);}
+                    }
+
 
 .last {
     float: left;

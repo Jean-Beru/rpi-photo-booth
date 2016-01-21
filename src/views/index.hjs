@@ -7,9 +7,15 @@
     </head>
     <body>
         <div id="webcam">
-            <img src="" id="stream" />
+            <img id="stream" />
             <div class="wrapper">
-                <div id="countdown"></div>
+                <div id="countdown">
+                    <div class="timer">
+                        <div class="hand"><span></span></div>
+                        <div class="hand"><span></span></div>
+                    </div>
+                    <div id="countdown_text"></div>
+                </div>
             </div>
         </div>
         <div class="last">
@@ -45,14 +51,13 @@
 
             var countdown, interval;
             function showCountdown() {
+                document.getElementById('countdown').className = 'start';
                 if (0 === countdown) {
-                    document.getElementById('countdown').style.display = 'none';
+                    document.getElementById('countdown').className = '';
                     clearInterval(interval);
                     //socket.emit('shot');
-                    alert('SHOT!!!!!');
                 } else {
-                    document.getElementById('countdown').innerHTML = countdown;
-                    document.getElementById('countdown').style.display = 'block';
+                    document.getElementById('countdown_text').innerHTML = countdown;
                 }
                 countdown--;
             }
