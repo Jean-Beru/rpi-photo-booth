@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{ title }}</title>
+        <title>{{#__}}title{{/__}}</title>
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
         <script src="/socket.io/socket.io.js"></script>
     </head>
@@ -19,25 +19,17 @@
             </div>
         </div>
         <div class="last">
-            <h3>
-                {{#__}}last_photos{{/__}}
-                <button id="shot">Shot!</button>
-            </h3>
             <ul>
-                <li><img src="http://lorempixel.com/160/120/people/1"></li>
-                <li><img src="http://lorempixel.com/160/120/people/2"></li>
-                <li><img src="http://lorempixel.com/160/120/people/3"></li>
-                <li><img src="http://lorempixel.com/160/120/people/4"></li>
-                <li><img src="http://lorempixel.com/160/120/people/5"></li>
-                <li><img src="http://lorempixel.com/160/120/people/6"></li>
-                <li><img src="http://lorempixel.com/160/120/people/7"></li>
-                <li><img src="http://lorempixel.com/160/120/people/8"></li>
-                <li><img src="http://lorempixel.com/160/120/people/9"></li>
-                <li><img src="http://lorempixel.com/160/120/people/10"></li>
-                <li><img src="http://lorempixel.com/160/120/people/11"></li>
-                <li><img src="http://lorempixel.com/160/120/people/12"></li>
+                {{#last}}
+                    <li><img src="/photos/{{.}}"></li>
+                {{/last}}
             </ul>
         </div>
+
+        <div class="action">
+            <button id="shot">{{#__}}action{{/__}}</button>
+        </div>
+
         <script>
             var socket = io();
             socket.on('stream', function(data) {

@@ -8,7 +8,7 @@ var options = {
         path: process.cwd() + '/stream/caption.jpg',
         width: 640,
         height: 480,
-        timelapse: 1000,
+        timelapse: 500,
     }
 };
 
