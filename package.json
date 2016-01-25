@@ -5,11 +5,13 @@
   "licence": "MIT",
   "private": true,
   "scripts": {
+    "postinstall": "$(npm bin)/bower install",
     "start": "$(npm bin)/nodemon -L app.js",
     "test": "$(npm bin)/eslint *.js src"
   },
   "dependencies": {
     "argv": "0.0.*",
+    "bower": "1.7.*",
     "chokidar": "1.4.*",
     "express": "4.13.*",
     "express-session": "1.12.*",

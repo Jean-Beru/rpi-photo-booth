@@ -9,6 +9,7 @@ var options = {
         width: 640,
         height: 480,
         timelapse: 500,
+        destination: process.cwd() + '/public/photos'
     }
 };
 
@@ -19,11 +20,8 @@ module.exports.stream = {
     configure: function (opt) {
         options = extend(options.stream, opt);
     },
-    getPath: function() {
-        return options.stream.path;
-    },
     start: function(callback) {
-        var path = this.getPath();
+        var path = options.stream.path;
 
         if (watcher) {
             callback.call(this, path);
@@ -56,7 +54,14 @@ module.exports.stream = {
         if (proc) {
             proc.kill();
         }
-        watcher.unwatch(this.getPath());
+        watcher.unwatch(options.stream.path);
         watcher = false;
+    },
+    capture: function(callback) {
+        var file = options.stream.path + '/' + (new Date()).getTime() + '.jpg';
+        var p = cp.spawn('raspistill', ['-o', file]);
+        p.on('close', function() {
+            callback.bind(this, file);
+        })
     }
 };

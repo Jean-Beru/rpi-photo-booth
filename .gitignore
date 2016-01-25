@@ -36,3 +36,4 @@ node_modules
 # Stream folders
 stream/*
 public/photos/*
+public/js/libs/*

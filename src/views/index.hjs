@@ -4,6 +4,7 @@
         <title>{{#__}}title{{/__}}</title>
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
         <script src="/socket.io/socket.io.js"></script>
+        <script src="js/libs/jquery/dist/jquery.min.js"></script>
     </head>
     <body>
         <div id="webcam">
@@ -19,7 +20,7 @@
             </div>
         </div>
         <div class="last">
-            <ul>
+            <ul id="last_caption">
                 {{#last}}
                     <li><img src="/photos/{{.}}"></li>
                 {{/last}}
@@ -41,13 +42,24 @@
                 webcam.style.width = Math.max(+webcam.style.width, stream.offsetWidth) + 'px';
             });
 
+            socket.on('capture', function(data) {
+                var child = '<li><img src="/photos/' + data.file + '"></li>';
+                var list = document.getElementById('last_caption');
+                if (0 === list.children.length) {
+                    list.appendChild(child);
+                } else {
+                    list.removeChild(list.children[11]);
+                    list.insertBefore(child)
+                }
+            });
+
             var countdown, interval;
             function showCountdown() {
                 document.getElementById('countdown').className = 'start';
                 if (0 === countdown) {
                     document.getElementById('countdown').className = '';
                     clearInterval(interval);
-                    //socket.emit('shot');
+                    socket.emit('capture');
                 } else {
                     document.getElementById('countdown_text').innerHTML = countdown;
                 }

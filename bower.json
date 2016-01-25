@@ -1,0 +1,21 @@
+{
+  "name": "takepic",
+  "description": "Take pictures from a Raspberry PI cam",
+  "main": "",
+  "license": "MIT",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "2.2.*"
+  }
+}

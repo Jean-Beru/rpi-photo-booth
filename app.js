@@ -80,3 +80,8 @@ io.on('connection', function(socket) {
         }
     });
 });
+io.on('capture', function() {
+    raspberry.stream.capture(function(file) {
+       io.emit('capture', { file: file });
+    });
+});
