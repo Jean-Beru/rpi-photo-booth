@@ -5,7 +5,7 @@ html {
 
 body {
     align-items: center;
-    background: url('/assets/bg.jpg') no-repeat top left;
+    background: url('../img/bg.jpg') no-repeat top left;
     background-size: cover;
     display: flex;
     justify-content: center;

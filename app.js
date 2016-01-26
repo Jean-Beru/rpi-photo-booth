@@ -53,21 +53,24 @@ fs.readdirSync('./src/controllers').forEach(function (file) {
 });
 
 // Create server
-var server = require('http').createServer(app).listen(app.get('port'), function(){
-    winston.log('info', 'Express server listening on port ' + app.get('port'));
+var server = require('http').createServer(app).listen(app.get('port'), function() {
+    winston.info('express server listening on port ' + app.get('port'));
 });
 
 // SocketIO
-var raspberry = require('./src/modules/raspberry');
 var io = require('socket.io')(server);
 var sockets = {};
+var raspberry = require('./src/modules/raspberry');
+raspberry.stream.setCamera(config.camera);
+
 io.on('connection', function(socket) {
+    winston.info('incoming connection');
     sockets[socket.id] = socket;
 
-    raspberry.stream.start(function(path) {
-        fs.readFile(path, function(err, data) {
-            if ('' !== data) {
-                io.emit('stream', { stream: data.toString('base64') });
+    raspberry.stream.start(function(err, date, file) {
+        fs.readFile(file, function(err, data) {
+            if (data) {
+                io.emit('stream', {stream: data.toString('base64')});
             }
         });
     });
@@ -81,8 +84,8 @@ io.on('connection', function(socket) {
     });
 
     socket.on('capture', function() {
-        raspberry.stream.capture(function(file) {
-            io.emit('capture', { file: file });
+        raspberry.stream.capture(function(err, date, file) {
+            io.emit('capture', { file: file.split('/').pop() });
         });
     });
 });

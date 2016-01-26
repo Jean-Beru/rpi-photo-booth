@@ -1,4 +1,4 @@
-# Take-a-pic
+# RPI-photo-booth
 
 Take pictures from a Raspberry PI cam
 
@@ -6,8 +6,8 @@ Take pictures from a Raspberry PI cam
 
 ```sh
 # Clone project
-git clone SOON...
-cd take-a-pic
+git clone git@github.com:Jean-Beru/rpi-photo-booth.git
+cd rpi-photo-booth
 
 # Install dependencies
 docker-compose -f docker/alpine/docker-compose.yml run --rm app npm install
@@ -16,7 +16,7 @@ docker-compose -f docker/alpine/docker-compose.yml run --rm app npm install
 docker-compose -f docker/alpine/docker-compose.yml  up -d
 ```
 
-# Develop on Take-a-pic
+# Develop on RPI-photo-booth
 
 ```sh
 # Run a shell in Docker

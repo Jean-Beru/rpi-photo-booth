@@ -1,76 +1,71 @@
 var winston  = require('winston');
-var cp       = require('child_process');
-var chokidar = require('chokidar');
-var extend   = require('extend');
 
 var options = {
     stream: {
-        path: process.cwd() + '/stream/caption.jpg',
-        width: 640,
-        height: 480,
-        timelapse: 100,
-        destination: process.cwd() + '/public/photos'
+        preview: {
+            mode:      'timelapse',
+            output:    process.cwd() + '/stream/caption.jpg',
+            quality:   5,
+            width:     640,
+            height:    480,
+            timelapse: 300,
+            awb:       'off',
+            nopreview: true,
+            thumb:     '0:0:0'
+        },
+        destination: process.cwd() + '/public/photos',
+        photo: {
+            mode:      'photo',
+            output:    '',
+            quality:   100,
+            width:     1920,
+            height:    1080,
+            timelapse: 0
+        }
     }
 };
 
-var watcher;
-var proc;
+// Go
+var Camera;
+var stream;
+var isStreaming = false;
 
 module.exports.stream = {
-    configure: function (opt) {
-        options = extend(options.stream, opt);
+    setCamera: function(type) {
+        winston.info('switch to ' + type + ' camera');
+        var module = 'raspistill' === type ? 'raspicam' : __dirname + '/../faker';
+        Camera = require(module);
     },
     start: function(callback) {
-        var path = options.stream.path;
-
-        if (watcher) {
-            callback.call(this, path);
+        if (isStreaming) {
             return;
         }
 
-        proc = cp.spawn('raspistill', [
-            '-w', options.stream.width,
-            '-h', options.stream.height,
-            '-o', path,
-            '-t', '999999999',
-            '-tl', options.stream.timelapse
-        ]);
-        proc.on('error', function() {
-            winston.warn('raspistill not available, using faker');
-            proc = cp.fork(__dirname + '/../faker', [
-                '-o', path,
-                '-t', options.stream.timelapse
-            ]);
+        winston.info('start streaming');
+        stream = new Camera(options.stream.preview);
+        stream.on('change', function(err, date) {
+            callback.call(this, err, date, options.stream.preview.output);
         });
-
-        winston.info('Watching for changes on ' + path + '...');
-
-        watcher = chokidar.watch(path);
-        watcher
-            .on('add', callback.bind(this, path))
-            .on('change', callback.bind(this, path));
+        stream.start();
+        isStreaming = true;
     },
     stop: function() {
-        if (proc) {
-            proc.kill();
-        }
-        watcher.unwatch(options.stream.path);
-        watcher = false;
+        stream.stop();
+        isStreaming = false;
     },
     capture: function(callback) {
-        var filename = (new Date()).getTime() + '.jpg';
-        var path     = options.stream.destination + '/' + filename;
+        var self = this;
+        self.stop();
 
-        var w = chokidar.watch(path);
-        w.on('add', function() {
-            callback.call(this, filename);
-            w.unwatch(path);
+        var output = options.stream.destination + '/' + new Date().getTime() + '.jpg';
+        options.stream.photo.output = output;
+        var capture = new Camera(options.stream.photo);
+        capture.on('read', function(err, date) {
+            callback.call(this, err, date, output);
         });
-
-        var p = cp.spawn('raspistill', ['-o', path]);
-        p.on('error', function() {
-            winston.warn('raspistill not available, using faker');
-            p = cp.fork(__dirname + '/../faker', ['-o', path]);
+        capture.on('exit', function() {
+            self.start(stream.listeners('read')[0]);
         });
+        capture.start();
     }
 };

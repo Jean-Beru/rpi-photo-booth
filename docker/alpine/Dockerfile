@@ -6,8 +6,6 @@ RUN mkdir -p /app \
 
 WORKDIR /app
 
-ONBUILD RUN npm install
-
 EXPOSE 3000
 
 CMD ["npm", "start"]

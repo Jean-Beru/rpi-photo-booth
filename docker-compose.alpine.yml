@@ -1,7 +1,9 @@
 app:
-    build: .
+    build: ./docker/alpine
     container_name: rpi_photo_booth
     volumes:
-        - ../..:/app
+        - .:/app
     ports:
         - "3000:3000"
+    environment:
+        - NODE_ENV

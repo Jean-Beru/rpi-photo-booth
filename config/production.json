@@ -1,7 +1,8 @@
 {
   "mode": "production",
-  "port": 5000,
+  "port": 3000,
   "secret": "thisIsMySecret",
   "locales": ["en", "fr"],
-  "cookieName": "cookieName"
+  "cookieName": "cookieName",
+  "camera": "raspistill"
 }

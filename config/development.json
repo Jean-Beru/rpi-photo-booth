@@ -3,5 +3,6 @@
   "port": 3000,
   "secret": "thisIsMySecret",
   "locales": ["en", "fr"],
-  "cookieName": "cookieName"
+  "cookieName": "cookieName",
+  "camera": "faker"
 }
