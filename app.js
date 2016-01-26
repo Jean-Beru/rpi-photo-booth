@@ -79,9 +79,10 @@ io.on('connection', function(socket) {
             raspberry.stream.stop();
         }
     });
-});
-io.on('capture', function() {
-    raspberry.stream.capture(function(file) {
-       io.emit('capture', { file: file });
+
+    socket.on('capture', function() {
+        raspberry.stream.capture(function(file) {
+            io.emit('capture', { file: file });
+        });
     });
 });

@@ -58,10 +58,19 @@ module.exports.stream = {
         watcher = false;
     },
     capture: function(callback) {
-        var file = options.stream.path + '/' + (new Date()).getTime() + '.jpg';
-        var p = cp.spawn('raspistill', ['-o', file]);
-        p.on('close', function() {
-            callback.bind(this, file);
-        })
+        var filename = (new Date()).getTime() + '.jpg';
+        var path     = options.stream.destination + '/' + filename;
+
+        var w = chokidar.watch(path);
+        w.on('add', function() {
+            callback.call(this, filename);
+            w.unwatch(path);
+        });
+
+        var p = cp.spawn('raspistill', ['-o', path]);
+        p.on('error', function() {
+            winston.warn('raspistill not available, using faker');
+            p = cp.fork(__dirname + '/../faker', ['-o', path]);
+        });
     }
 };

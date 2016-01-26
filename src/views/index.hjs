@@ -7,70 +7,72 @@
         <script src="js/libs/jquery/dist/jquery.min.js"></script>
     </head>
     <body>
-        <div id="webcam">
-            <img id="stream" />
-            <div class="wrapper">
-                <div id="countdown">
-                    <div class="timer">
-                        <div class="hand"><span></span></div>
-                        <div class="hand"><span></span></div>
+        <main>
+            <div id="webcam">
+                <img id="stream" />
+                <div class="wrapper">
+                    <div id="countdown">
+                        <div class="timer">
+                            <div class="hand"><span></span></div>
+                            <div class="hand"><span></span></div>
+                        </div>
+                        <div id="countdown_text"></div>
                     </div>
-                    <div id="countdown_text"></div>
                 </div>
             </div>
-        </div>
-        <div class="last">
-            <ul id="last_caption">
-                {{#last}}
-                    <li><img src="/photos/{{.}}"></li>
-                {{/last}}
-            </ul>
-        </div>
-
-        <div class="action">
-            <button id="shot">{{#__}}action{{/__}}</button>
-        </div>
+            <div class="last">
+                <ul id="last_caption">
+                    {{#last}}
+                        <li><img src="/photos/{{.}}"></li>
+                    {{/last}}
+                </ul>
+            </div>
+        </main>
 
         <script>
             var socket = io();
             socket.on('stream', function(data) {
-                var stream = document.getElementById('stream');
-                stream.src = 'data:image/jpeg;base64,' + data.stream;
+                var stream = $('#stream');
+                stream.attr('src', 'data:image/jpeg;base64,' + data.stream);
 
-                var webcam = document.getElementById('webcam');
-                webcam.style.height = Math.max(+webcam.style.height, stream.offsetHeight) + 'px';
-                webcam.style.width = Math.max(+webcam.style.width, stream.offsetWidth) + 'px';
+                var webcam = $('#webcam');
+                webcam.height(Math.max(webcam.height(), stream.height()));
+                webcam.width(Math.max(webcam.width(), stream.width()));
             });
 
             socket.on('capture', function(data) {
-                var child = '<li><img src="/photos/' + data.file + '"></li>';
-                var list = document.getElementById('last_caption');
-                if (0 === list.children.length) {
-                    list.appendChild(child);
-                } else {
-                    list.removeChild(list.children[11]);
-                    list.insertBefore(child)
+                var list = $('#last_caption');
+                if (list.find('li').length >= 12) {
+                    list.find('li:last').remove();
                 }
+                list.prepend(
+                    $('<li>').append($('<img>').attr('src', '/photos/' + data.file))
+                );
             });
 
             var countdown, interval;
             function showCountdown() {
-                document.getElementById('countdown').className = 'start';
+                $('#countdown').addClass('start');
                 if (0 === countdown) {
-                    document.getElementById('countdown').className = '';
+                    $('#countdown').removeClass('start');
                     clearInterval(interval);
                     socket.emit('capture');
+                    $('<div>').attr('id', 'overlay').appendTo('body').fadeOut(500);
                 } else {
-                    document.getElementById('countdown_text').innerHTML = countdown;
+                    $('#countdown_text').text(countdown);
                 }
                 countdown--;
             }
 
-            document.getElementById('shot').onclick = function() {
+            $(document).on('click contextmenu', function() {
+                if ($('#countdown').hasClass('start')) {
+                    return false;
+                }
                 countdown = 5;
                 showCountdown();
                 interval = setInterval(showCountdown, 1000);
-            };
+                return false;
+            });
         </script>
     </body>
 </html>

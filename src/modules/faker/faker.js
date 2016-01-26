@@ -20,18 +20,39 @@ var args = argv
     ])
     .run();
 
-fs.readdir(
-    __dirname + '/stream',
-    function(err, files) {
-        var current = 0;
-        setInterval(
-            function() {
+var faker = {
+    capture: function(output) {
+        fs.readdir(
+            __dirname + '/stream',
+            function(err, files) {
+                var random = Math.floor(Math.random() * files.length);
                 fs
-                    .createReadStream(__dirname + '/stream/' + files[current])
-                    .pipe(fs.createWriteStream(args.options.output));
-                current = ++current === files.length ? 0 : current ;
-            },
-            args.options.timelapse
+                    .createReadStream(__dirname + '/stream/' + files[random])
+                    .pipe(fs.createWriteStream(output));
+            }
+        );
+    },
+    stream: function(output, timelapse) {
+        fs.readdir(
+            __dirname + '/stream',
+            function(err, files) {
+                var current = 0;
+                setInterval(
+                    function() {
+                        fs
+                            .createReadStream(__dirname + '/stream/' + files[current])
+                            .pipe(fs.createWriteStream(output));
+                        current = ++current === files.length ? 0 : current ;
+                    },
+                    timelapse
+                );
+            }
         );
     }
-);
+};
+
+if (args.options.timelapse) {
+    faker.stream(args.options.output, args.options.timelapse);
+} else {
+    faker.capture(args.options.output);
+}

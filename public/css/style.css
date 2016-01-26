@@ -1,7 +1,15 @@
+html {
+    cursor:none;
+    height: 100%;
+}
+
 body {
+    align-items: center;
     background: url('/assets/bg.jpg') no-repeat top left;
     background-size: cover;
-    padding: 50px;
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
 }
 
 h3 {
@@ -117,7 +125,7 @@ h3 {
 .last {
     float: left;
     padding: 0 20px;
-    width: 684px;
+    width: 700px;
 }
     .last ul {
         list-style: none;
@@ -125,7 +133,9 @@ h3 {
         padding: 0;
     }
         .last ul li {
-            display: inline-block;
+            float: left;
+            height: 160px;
+            margin: 0 6px 6px 0;
         }
             .last ul li img {
                 border: 4px solid #fff;
@@ -134,15 +144,12 @@ h3 {
                 width: 160px;
             }
 
-.action {
-    clear: both;
-    padding: 20px 0;
+#overlay {
+    background-color: #fff;
+    left: 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
-    .action button {
-        padding: 10px;
-        font-family: arial;
-        font-size: 40px;
-        font-variant: small-caps;
-        font-weight: bold;
-        width: 100%;
-    }
