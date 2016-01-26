@@ -33,7 +33,4 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
-# Stream folders
-stream/*
-public/photos/*
 public/js/libs/*
