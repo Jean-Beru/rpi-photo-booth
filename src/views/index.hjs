@@ -33,7 +33,7 @@
             var socket = io();
             socket.on('stream', function(data) {
                 var stream = $('#stream');
-                stream.attr('src', 'data:image/jpeg;base64,' + data.stream);
+                stream.attr('src', '/stream/'+data.file + '?_ts=' + (new Date().getTime()));
 
                 var webcam = $('#webcam');
                 webcam.height(Math.max(webcam.height(), stream.height()));
@@ -48,6 +48,16 @@
                 list.prepend(
                     $('<li>').append($('<img>').attr('src', '/photos/' + data.file))
                 );
+
+                var preview = $('<div>').attr('id', 'preview')
+                    .appendTo('body')
+                    .append($('<img>').attr('src', '/photos/' + data.file));
+                setTimeout(
+                    function() {
+                        preview.fadeOut(1000, function() {$(this).remove();});
+                    },
+                    5000
+                )
             });
 
             var countdown, interval;
@@ -57,7 +67,7 @@
                     $('#countdown').removeClass('start');
                     clearInterval(interval);
                     socket.emit('capture');
-                    $('<div>').attr('id', 'overlay').appendTo('body').fadeOut(500);
+                    $('<div>').attr('id', 'overlay').appendTo('body').fadeOut(500, function() {$(this).remove();});
                 } else {
                     $('#countdown_text').text(countdown);
                 }

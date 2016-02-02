@@ -10,7 +10,6 @@ var expressSession = require('express-session');
 var bodyParser     = require('body-parser');
 var cookieParser   = require('cookie-parser');
 var methodOverride = require('method-override');
-var morgan         = require('morgan');
 var serveStatic    = require('serve-static');
 var serveFavicon   = require('serve-favicon');
 var app = express();
@@ -22,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false })); // application/x-www-form-u
 app.use(cookieParser());
 app.use(expressSession({ 'secret': config.secret }));
 app.use(methodOverride('X-HTTP-Method-Override'));
-app.use(morgan('combined'));
 app.use(serveFavicon(__dirname + '/public/favicon.png'));
 app.use(serveStatic(__dirname + '/public/'));
 
@@ -60,31 +58,27 @@ var server = require('http').createServer(app).listen(app.get('port'), function(
 // SocketIO
 var io = require('socket.io')(server);
 var sockets = {};
-var raspberry = require('./src/modules/raspberry');
-raspberry.stream.setCamera(config.camera);
+var Stream = require('./src/modules/raspberry').Stream;
+var stream = new Stream(config.raspberry.stream);
 
 io.on('connection', function(socket) {
     winston.info('incoming connection');
     sockets[socket.id] = socket;
 
-    raspberry.stream.start(function(err, date, file) {
-        fs.readFile(file, function(err, data) {
-            if (data) {
-                io.emit('stream', {stream: data.toString('base64')});
-            }
-        });
+    stream.start(function(err, date, file) {
+        io.emit('stream', {file: file.split('/').pop()});
     });
 
     socket.on('disconnect', function() {
         delete sockets[socket.id];
 
         if (0 === Object.keys(sockets).length) {
-            raspberry.stream.stop();
+            stream.stop();
         }
     });
 
     socket.on('capture', function() {
-        raspberry.stream.capture(function(err, date, file) {
+        stream.capture(function(err, date, file) {
             io.emit('capture', { file: file.split('/').pop() });
         });
     });

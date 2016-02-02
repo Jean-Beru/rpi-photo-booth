@@ -1,6 +1,0 @@
-app:
-    build: ./docker/streamer
-    container_name: rpi_photo_booth
-    ports:
-        - "8080:8080"
-    privileged: true

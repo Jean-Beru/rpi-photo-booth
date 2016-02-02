@@ -1,8 +1,33 @@
 {
-  "mode": "production",
-  "port": 3000,
-  "secret": "thisIsMySecret",
-  "locales": ["en", "fr"],
+  "mode":       "production",
+  "port":       3000,
+  "secret":     "thisIsMySecret",
+  "locales":    ["en", "fr"],
   "cookieName": "cookieName",
-  "camera": "raspistill"
+  "raspberry": {
+    "stream": {
+      "module":       "raspistill",
+      "preview_path": "%root%/public/stream/caption.jpg",
+      "preview": {
+        "mode":      "timelapse",
+        "width":     640,
+        "height":    480,
+        "timelapse": 100,
+        "timeout":   999999999,
+        "awb":       "off",
+        "nopreview": true,
+        "thumb":     "0:0:0",
+        "burst":     true,
+        "shutter":   100000
+      },
+      "photo_path": "%root%/public/photos/%ts%.jpg",
+      "photo": {
+        "mode":      "photo",
+        "quality":   100,
+        "width":     1920,
+        "height":    1080,
+        "timelapse": 0
+      }
+    }
+  }
 }
