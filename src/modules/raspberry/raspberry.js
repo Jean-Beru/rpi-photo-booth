@@ -11,8 +11,7 @@ var options = {
             timeout:   999999999,
             awb:       'off',
             nopreview: true,
-            thumb:     '0:0:0',
-            burst:     true
+            thumb:     '0:0:0'
         },
         destination: process.cwd() + '/public/photos',
         photo: {
