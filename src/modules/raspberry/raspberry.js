@@ -5,7 +5,6 @@ var options = {
         preview: {
             mode:      'timelapse',
             output:    process.cwd() + '/stream/caption.jpg',
-            quality:   5,
             width:     640,
             height:    480,
             timelapse: 250,
