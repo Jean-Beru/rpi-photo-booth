@@ -5,10 +5,10 @@ var options = {
         preview: {
             mode:      'timelapse',
             output:    process.cwd() + '/stream/caption.jpg',
-            quality:   1,
+            quality:   3,
             width:     640,
             height:    480,
-            timelapse: 300,
+            timelapse: 1000,
             awb:       'off',
             nopreview: true,
             thumb:     '0:0:0'
