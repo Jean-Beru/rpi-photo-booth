@@ -7,13 +7,13 @@ var options = {
             output:    process.cwd() + '/stream/caption.jpg',
             width:     640,
             height:    480,
-            timelapse: 100,
+            timelapse: 250,
             timeout:   999999999,
             awb:       'off',
             nopreview: true,
             thumb:     '0:0:0',
             burst:     true,
-            shutter:   100000
+            shutter:   250000
         },
         destination: process.cwd() + '/public/photos',
         photo: {
