@@ -7,13 +7,13 @@ var options = {
             output:    process.cwd() + '/stream/caption.jpg',
             width:     640,
             height:    480,
-            timelapse: 250,
+            timelapse: 100,
             timeout:   999999999,
             awb:       'off',
             nopreview: true,
             thumb:     '0:0:0',
             burst:     true,
-            shutter:   250000
+            shutter:   100000
         },
         destination: process.cwd() + '/public/photos',
         photo: {
@@ -45,10 +45,11 @@ module.exports.stream = {
 
         winston.info('start streaming');
         stream = new Camera(options.stream.preview);
-        stream.on('change', function(err, date) {
-            callback.call(this, err, date, options.stream.preview.output);
-        });
-        stream.start();
+        stream
+            .on('change', function(err, date) {
+                callback.call(this, err, date, options.stream.preview.output);
+            })
+            .start();
         isStreaming = true;
     },
     stop: function() {
@@ -62,12 +63,13 @@ module.exports.stream = {
         var output = options.stream.destination + '/' + new Date().getTime() + '.jpg';
         options.stream.photo.output = output;
         var capture = new Camera(options.stream.photo);
-        capture.on('read', function(err, date) {
-            callback.call(this, err, date, output);
-        });
-        capture.on('exit', function() {
-            self.start(stream.listeners('read')[0]);
-        });
-        capture.start();
+        capture
+            .on('read', function(err, date) {
+                callback.call(this, err, date, output);
+            })
+            .on('exit', function() {
+                self.start(stream.listeners('change')[0]);
+            })
+            .start();
     }
 };

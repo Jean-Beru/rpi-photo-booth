@@ -38,7 +38,7 @@ Faker.prototype.start = function() {
                     current = 0;
                     interval = setInterval(
                         function() {
-                            self.emit( 'read', null, new Date().getTime(), __dirname + '/stream/' + files[current] );
+                            self.emit( 'change', null, new Date().getTime(), __dirname + '/stream/' + files[current] );
                             current = ++current === files.length ? 0 : current ;
                         },
                         +self.opts.timelapse
