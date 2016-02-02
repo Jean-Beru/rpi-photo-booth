@@ -13,7 +13,7 @@ var options = {
             nopreview: true,
             thumb:     '0:0:0',
             burst:     true,
-            shutter:   100000
+            shutter:   500000
         },
         destination: process.cwd() + '/public/photos',
         photo: {
