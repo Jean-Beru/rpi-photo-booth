@@ -1,7 +1,7 @@
-var winston      = require('winston');
-var fs           = require('fs');
-var util         = require('util');
-var eventEmitter = require('events').EventEmitter;
+var winston      = require('winston'),
+    fs           = require('fs'),
+    util         = require('util'),
+    eventEmitter = require('events').EventEmitter;
 
 function Faker( opts ) {
     if ( !(this instanceof Faker) ) {
@@ -26,11 +26,12 @@ Faker.prototype.start = function() {
     if (false !== interval) {
         return;
     }
-    var self = this;
+    var self = this,
+        src  = __dirname + '/stream';
 
     self.emit( 'start', null, new Date().getTime() );
     fs.readdir(
-        __dirname + '/stream',
+        src,
         function(err, files) {
             var current;
             switch (self.opts.mode) {
@@ -38,7 +39,11 @@ Faker.prototype.start = function() {
                     current = 0;
                     interval = setInterval(
                         function() {
-                            self.emit( 'change', null, new Date().getTime(), __dirname + '/stream/' + files[current] );
+                            if (fs.statSync(self.opts.output).isFile()) {
+                                fs.unlinkSync(self.opts.output);
+                            }
+                            fs.symlinkSync(src + '/' + files[current], self.opts.output);
+                            self.emit( 'change', null, new Date().getTime(), self.opts.output );
                             current = ++current === files.length ? 0 : current ;
                         },
                         +self.opts.timelapse
@@ -46,7 +51,7 @@ Faker.prototype.start = function() {
                     break;
                 case 'photo' :
                     current = Math.floor(Math.random() * files.length);
-                    fs.createReadStream(__dirname + '/stream/' + files[current]).pipe(fs.createWriteStream(self.opts.output));
+                    fs.createReadStream(src + '/' + files[current]).pipe(fs.createWriteStream(self.opts.output));
                     self.emit( 'read', null, new Date().getTime(), self.opts.output );
                     self.stop();
                     break;

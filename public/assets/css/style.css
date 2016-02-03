@@ -1,6 +1,7 @@
 html {
     cursor:none;
     height: 100%;
+    margin: 0;
 }
 
 body {
@@ -153,3 +154,19 @@ h3 {
     width: 100%;
     z-index: 1000;
 }
+
+#preview {
+    background-color: #fff;
+    display: block;
+    left: 0;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 500;
+}
+    #preview img {
+        background-color: #fff;
+        height: 100%;
+    }
