@@ -53,7 +53,7 @@ Stream.prototype.start = function(callback) {
     var self = this;
     stream = new Camera(self.opts.preview);
     stream
-        .on('change', function(err, date, filename) {
+        .on('read', function(err, date, filename) {
             if ('~' === filename.slice(-1)) {
                 return;
             }
