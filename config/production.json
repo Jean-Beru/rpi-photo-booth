@@ -6,7 +6,7 @@
   "cookieName": "cookieName",
   "raspberry": {
     "stream": {
-      "module":       "raspistill",
+      "module":       "raspicam",
       "preview_path": "%root%/public/stream/caption.jpg",
       "preview": {
         "mode":      "timelapse",
@@ -26,7 +26,7 @@
         "quality":   100,
         "width":     1920,
         "height":    1080,
-        "timelapse": 0
+        "timelapse": 100
       }
     }
   }

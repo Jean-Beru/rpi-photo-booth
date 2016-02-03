@@ -78,10 +78,8 @@ Stream.prototype.capture = function(callback) {
     winston.info('start capture');
     var capture = new Camera(self.opts.photo);
     capture
-        .on('read', function(err, date) {
-            callback.call(this, err, date, self.opts.photo.output);
-        })
         .on('exit', function() {
+            callback.call(this, err, new Date().getTime(), self.opts.photo.output);
             self.start(stream.listeners('change')[0]);
         })
         .start();
