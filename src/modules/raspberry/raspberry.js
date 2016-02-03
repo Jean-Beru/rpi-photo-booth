@@ -54,7 +54,7 @@ Stream.prototype.start = function(callback) {
     stream = new Camera(self.opts.preview);
     stream
         .on('change', function(err, date, filename) {
-            if ('~' === filename.slice(1)) {
+            if ('~' === filename.slice(-1)) {
                 return;
             }
             callback.call(this, err, date, filename);
