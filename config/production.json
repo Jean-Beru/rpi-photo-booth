@@ -26,7 +26,8 @@
         "quality":   100,
         "width":     1920,
         "height":    1080,
-        "timelapse": 100
+        "timeout":   100,
+        "nopreview": true
       }
     }
   }

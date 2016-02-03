@@ -53,8 +53,11 @@ Stream.prototype.start = function(callback) {
     var self = this;
     stream = new Camera(self.opts.preview);
     stream
-        .on('change', function(err, date) {
-            callback.call(this, err, date, self.opts.preview.output);
+        .on('change', function(err, date, filename) {
+            if ('~' === filename.slice(1)) {
+                return;
+            }
+            callback.call(this, err, date, filename);
         })
         .start();
     isStreaming = true;
