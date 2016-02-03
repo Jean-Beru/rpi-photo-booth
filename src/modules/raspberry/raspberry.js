@@ -83,7 +83,7 @@ Stream.prototype.capture = function(callback) {
     capture
         .on('exit', function() {
             callback.call(this, '', new Date().getTime(), self.opts.photo.output);
-            self.start(stream.listeners('change')[0]);
+            self.start(stream.listeners('read')[0]);
         })
         .start();
     return true;
