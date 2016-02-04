@@ -7,7 +7,7 @@
   "raspberry": {
     "stream": {
       "module":       "raspicam",
-      "preview_path": "%root%/public/stream/caption.jpg",
+      "preview_path": "%root%/public/stream/caption%1d.jpg",
       "preview": {
         "mode":      "timelapse",
         "width":     640,

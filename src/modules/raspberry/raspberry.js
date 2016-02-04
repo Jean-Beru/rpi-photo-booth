@@ -5,6 +5,9 @@ var Camera,
     stream,
     isStreaming = false;
 
+function isTemp(filename) {
+    return '~' === filename.slice(-1);
+}
 
 function Stream( opts ) {
     if ( !(this instanceof Stream) ) {
@@ -53,39 +56,50 @@ Stream.prototype.start = function(callback) {
     var self = this;
     stream = new Camera(self.opts.preview);
     stream
+        .on('start', function() {
+            isStreaming = true;
+        })
         .on('read', function(err, date, filename) {
-            if ('~' === filename.slice(-1)) {
+            if (isTemp(filename)) {
                 return;
             }
             callback.call(this, err, date, filename);
         })
         .start();
-    isStreaming = true;
-    return true;
 };
 
-Stream.prototype.stop = function() {
+Stream.prototype.stop = function(callback) {
     winston.info('stop stream');
 
-    stream.stop();
-    isStreaming = false;
-    return true;
+    stream
+        .on('exit', function(err, date) {
+            isStreaming = false;
+            callback.call(this, err, date);
+        })
+        .stop();
 };
 
 Stream.prototype.capture = function(callback) {
-    this.stop();
-    this.setOpts({}); // update paths
-
     var self = this;
+    var streamListener = stream.listeners('read')[0];
 
-    winston.info('start capture');
-    var capture = new Camera(self.opts.photo);
-    capture
-        .on('exit', function() {
-            callback.call(this, '', new Date().getTime(), self.opts.photo.output);
-            self.start(stream.listeners('read')[0]);
-        })
-        .start();
+    self.stop(function() {
+        self.setOpts({}); // update paths
+
+        winston.info('start capture');
+        var capture = new Camera(self.opts.photo);
+        capture
+            .on('read', function(err, date, filename) {
+                if (isTemp(filename)) {
+                    return;
+                }
+                callback.call(this, err, date, filename);
+            })
+            .on('exit', function() {
+                self.start(streamListener);
+            })
+            .start();
+    });
     return true;
 };
 

@@ -43,7 +43,7 @@ Faker.prototype.start = function() {
                                 fs.unlinkSync(self.opts.output);
                             }
                             fs.symlinkSync(src + '/' + files[current], self.opts.output);
-                            self.emit( 'change', null, new Date().getTime(), self.opts.output );
+                            self.emit( 'read', null, new Date().getTime(), self.opts.output );
                             current = ++current === files.length ? 0 : current ;
                         },
                         +self.opts.timelapse
