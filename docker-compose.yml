@@ -1,5 +1,5 @@
 app:
-    build: ./docker/alpine
+    build: ./docker
     container_name: rpi_photo_booth
     volumes:
         - .:/app

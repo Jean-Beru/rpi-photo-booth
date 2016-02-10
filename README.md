@@ -9,22 +9,19 @@ Take pictures from a Raspberry PI cam
 git clone git@github.com:Jean-Beru/rpi-photo-booth.git
 cd rpi-photo-booth
 
-# Install dependencies
-docker-compose -f docker/alpine/docker-compose.yml run --rm app npm install
-
 # Run server
-docker-compose -f docker/alpine/docker-compose.yml  up -d
+npm start
 ```
 
 # Develop on RPI-photo-booth
 
 ```sh
-# Run a shell in Docker
-docker-compose -f docker/alpine/docker-compose.yml  run --rm --service-ports app /bin/sh
+# Run server in Docker
+docker-compose up -d
 
-# Emulate camera
-docker-compose -f docker/alpine/docker-compose.yml  run --rm  app node stream_faker.js
+# Run tests in Docker
+docker-compose run --rm app npm test
 ```
 
 # Note
-Change `docker/alpine/docker-compose.yml` to `docker/hypriot/docker-compose.yml` for RPI installation.
+No Dockerfile for raspbian (or hypriot) at the moment.
