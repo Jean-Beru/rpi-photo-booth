@@ -6,7 +6,7 @@ Take pictures from a Raspberry PI cam
 
 ```sh
 # Clone project
-git clone git@github.com:Jean-Beru/rpi-photo-booth.git
+git clone https://github.com/Jean-Beru/rpi-photo-booth.git
 cd rpi-photo-booth
 
 # Run server
