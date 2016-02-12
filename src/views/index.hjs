@@ -41,6 +41,7 @@
             });
 
             socket.on('capture', function(data) {
+                $('<div>').attr('id', 'overlay').appendTo('body').fadeOut(500, function() {$(this).remove();});
                 var list = $('#last_caption');
                 if (list.find('li').length >= 12) {
                     list.find('li:last').remove();
@@ -68,7 +69,6 @@
                     case 0 :
                         $('#countdown').removeClass('start');
                         clearInterval(interval);
-                        $('<div>').attr('id', 'overlay').appendTo('body').fadeOut(500, function() {$(this).remove();});
                         break;
                     case 1 :
                         socket.emit('capture');
