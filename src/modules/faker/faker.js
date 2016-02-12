@@ -51,9 +51,14 @@ Faker.prototype.start = function() {
                     break;
                 case 'photo' :
                     current = Math.floor(Math.random() * files.length);
-                    fs.createReadStream(src + '/' + files[current]).pipe(fs.createWriteStream(self.opts.output));
-                    self.emit( 'read', null, new Date().getTime(), self.opts.output );
-                    self.stop();
+                    setTimeout(
+                        function() {
+                            fs.createReadStream(src + '/' + files[current]).pipe(fs.createWriteStream(self.opts.output));
+                            self.emit( 'read', null, new Date().getTime(), self.opts.output );
+                            self.stop();
+                        },
+                        +self.opts.timeout
+                    );
                     break;
                 default:
                     self.emit( 'error', 'Error: mode must be photo or timelapse', new Date().getTime() );

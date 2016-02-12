@@ -63,7 +63,9 @@ Stream.prototype.start = function(callback) {
             if (isTemp(filename)) {
                 return;
             }
-            callback.call(this, err, date, filename);
+            if ('function' === typeof callback) {
+                callback.call(this, err, date, filename);
+            }
         })
         .start();
 };
@@ -74,7 +76,9 @@ Stream.prototype.stop = function(callback) {
     stream
         .on('exit', function(err, date) {
             isStreaming = false;
-            callback.call(this, err, date);
+            if ('function' === typeof callback) {
+                callback.call(this, err, date);
+            }
         })
         .stop();
 };
@@ -93,7 +97,9 @@ Stream.prototype.capture = function(callback) {
                 if (isTemp(filename)) {
                     return;
                 }
-                callback.call(this, err, date, filename);
+                if ('function' === typeof callback) {
+                    callback.call(this, err, date, filename);
+                }
             })
             .on('exit', function() {
                 self.start(streamListener);

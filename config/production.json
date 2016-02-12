@@ -28,7 +28,7 @@
         "height":    1440,
         "timeout":   1000,
         "nopreview": true,
-	"exposure":  "night"
+        "exposure":  "night"
       }
     }
   }

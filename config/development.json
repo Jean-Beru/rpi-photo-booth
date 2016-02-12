@@ -12,13 +12,23 @@
         "mode":      "timelapse",
         "width":     640,
         "height":    480,
-        "timelapse": 100
+        "timelapse": 100,
+        "timeout":   999999999,
+        "awb":       "off",
+        "nopreview": true,
+        "thumb":     "0:0:0",
+        "burst":     true,
+        "shutter":   100000
       },
       "photo_path": "%root%/public/photos/%ts%.jpg",
       "photo": {
         "mode":      "photo",
+        "quality":   90,
         "width":     1920,
-        "height":    1440
+        "height":    1440,
+        "timeout":   1000,
+        "nopreview": true,
+        "exposure":  "night"
       }
     }
   }
