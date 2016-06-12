@@ -27,8 +27,8 @@ function Stream( opts ) {
 
 Stream.prototype.setOpts = function(opts) {
     this.opts = util._extend(this.opts, opts);
-    this.opts.preview.output = this.formatPath(this.opts.preview_path);
-    this.opts.photo.output = this.formatPath(this.opts.photo_path);
+    this.opts.preview.output = this.formatPath(this.opts.preview.output);
+    this.opts.photo.output = this.formatPath(this.opts.photo.output);
 
     if ('undefined' !== typeof opts.module) {
         var module = this.opts.module;
