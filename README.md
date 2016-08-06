@@ -17,10 +17,10 @@ npm start
 
 ```sh
 # Run server in Docker
-docker-compose up -d
+make start
 
 # Run tests in Docker
-docker-compose run --rm app npm test
+make test
 ```
 
 # Note

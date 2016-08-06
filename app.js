@@ -1,17 +1,17 @@
 // Configuration
-var config = require('./config');
+const config = require('./config');
 
 // Utils
-var winston = require('winston');
+const winston = require('winston');
 
 // ExpressJS
-var express        = require('express');
-var expressSession = require('express-session');
-var bodyParser     = require('body-parser');
-var cookieParser   = require('cookie-parser');
-var methodOverride = require('method-override');
-var serveStatic    = require('serve-static');
-var serveFavicon   = require('serve-favicon');
+const express        = require('express');
+const expressSession = require('express-session');
+const bodyParser     = require('body-parser');
+const cookieParser   = require('cookie-parser');
+const methodOverride = require('method-override');
+const serveStatic    = require('serve-static');
+const serveFavicon   = require('serve-favicon');
 var app = express();
 app.set('port', config.port);
 app.set('views', __dirname + '/src/views');
@@ -79,7 +79,24 @@ io.on('connection', function(socket) {
 
     socket.on('capture', function() {
         stream.capture(function(err, date, file) {
-            io.emit('capture', { file: file.split('/').pop() });
+            // TODO convert file.jpg -quality 75 -resize 200×100 fil.jpg
+            var split = file.split('/');
+            var input = split.pop();
+            var output = input.replace(/\.jpg/ig, '_thumb.jpg');
+            var path = split.join('/');
+
+            require('easyimage')
+                .resize({
+                    src: path+'/'+input,
+                    dst: path+'/'+output,
+                    quality: 75,
+                    width: 160,
+                    height: 120
+                })
+                .then(
+                    function() { io.emit('capture', { file: output }); },
+                    winston.error
+                );
         });
     });
 });

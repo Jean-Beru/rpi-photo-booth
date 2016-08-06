@@ -39,7 +39,7 @@ Faker.prototype.start = function() {
                     current = 0;
                     interval = setInterval(
                         function() {
-                            if (fs.statSync(self.opts.output).isFile()) {
+                            if (fs.existsSync(self.opts.output)) {
                                 fs.unlinkSync(self.opts.output);
                             }
                             fs.symlinkSync(src + '/' + files[current], self.opts.output);
@@ -53,9 +53,13 @@ Faker.prototype.start = function() {
                     current = Math.floor(Math.random() * files.length);
                     setTimeout(
                         function() {
-                            fs.createReadStream(src + '/' + files[current]).pipe(fs.createWriteStream(self.opts.output));
-                            self.emit( 'read', null, new Date().getTime(), self.opts.output );
-                            self.stop();
+                            var readStream = fs.createReadStream(src + '/' + files[current]);
+                            var writeStream = fs.createWriteStream(self.opts.output)
+                                .on('close', function() {
+                                    self.emit( 'read', null, new Date().getTime(), self.opts.output );
+                                    self.stop();
+                                });
+                            readStream.pipe(writeStream);
                         },
                         +self.opts.timeout
                     );

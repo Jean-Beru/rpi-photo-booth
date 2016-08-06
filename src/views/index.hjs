@@ -41,7 +41,7 @@
             });
 
             socket.on('capture', function(data) {
-                //$('<div>').attr('id', 'overlay').appendTo('body').fadeOut(100, function() {$(this).remove();});
+//                $('<div>').attr('id', 'overlay').appendTo('body').fadeOut(100, function() {$(this).remove();});
                 var list = $('#last_caption');
                 if (list.find('li').length >= 12) {
                     list.find('li:last').remove();
@@ -50,15 +50,15 @@
                     $('<li>').append($('<img>').attr('src', '/photos/' + data.file))
                 );
 
-                var preview = $('<div>').attr('id', 'preview')
-                    .appendTo('body')
-                    .append($('<img>').attr('src', '/photos/' + data.file));
-                setTimeout(
-                    function() {
-                        preview.remove();
-                    },
-                    10000
-                )
+//                var preview = $('<div>').attr('id', 'preview')
+//                    .appendTo('body')
+//                    .append($('<img>').attr('src', '/photos/' + data.file));
+//                setTimeout(
+//                    function() {
+//                        preview.remove();
+//                    },
+//                    10000
+//                )
             });
 
             var countdown, interval;

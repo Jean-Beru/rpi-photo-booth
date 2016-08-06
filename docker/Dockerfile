@@ -1,7 +1,7 @@
 FROM jeanberu/nodejs
 
 RUN mkdir -p /app \
-    && apk add --update g++ make python git \
+    && apk add --update g++ make python git imagemagick \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /app

@@ -5,7 +5,7 @@
   "licence": "MIT",
   "private": true,
   "scripts": {
-    "postinstall": "$(npm bin)/bower install --config.interactive=false",
+    "install": "$(npm bin)/bower install --config.interactive=false",
     "start": "$(npm bin)/nodemon -L app.js",
     "test": "$(npm bin)/eslint *.js src"
   },
@@ -15,12 +15,13 @@
     "express-session": "^1.12",
     "body-parser": "^1.14",
     "cookie-parser": "^1.4",
+    "easyimage": "^2.1",
     "eslint": "^1.10",
     "hjs": "^*",
     "i18n": "^0.5",
     "method-override": "^2.3",
     "nodemon": "^1.8",
-    "raspicam": "^0.2",
+    "raspicam": "git://github.com/Jean-Beru/node-raspicam.git",
     "serve-favicon": "^2.3",
     "serve-static": "^1.10",
     "socket.io": "^1.3",
