@@ -79,7 +79,6 @@ io.on('connection', function(socket) {
 
     socket.on('capture', function() {
         stream.capture(function(err, date, file) {
-            // TODO convert file.jpg -quality 75 -resize 200×100 fil.jpg
             var split = file.split('/');
             var input = split.pop();
             var output = input.replace(/\.jpg/ig, '_thumb.jpg');
