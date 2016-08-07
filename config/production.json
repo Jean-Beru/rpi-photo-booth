@@ -11,7 +11,7 @@
         "mode":      "timelapse",
         "width":     640,
         "height":    480,
-        "timelapse": 500,
+        "timelapse": 350,
         "timeout":   999999999,
         "output":    "%root%/public/stream/caption%02d.jpg",
         "awb":       "off",
@@ -30,6 +30,7 @@
         "output":    "%root%/public/photos/%ts%.jpg",
         "nopreview": true,
         "exposure":  "night",
+        "shutter":   500000,
         "rotation":  90
       }
     }

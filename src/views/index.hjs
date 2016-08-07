@@ -40,26 +40,19 @@
                 webcam.width(Math.max(webcam.width(), stream.width()));
             });
 
-            socket.on('capture', function(data) {
-//                $('<div>').attr('id', 'overlay').appendTo('body').fadeOut(100, function() {$(this).remove();});
-                var list = $('#last_caption');
-                if (list.find('li').length >= 12) {
-                    list.find('li:last').remove();
-                }
-                list.prepend(
-                    $('<li>').append($('<img>').attr('src', '/photos/' + data.file))
-                );
-
-//                var preview = $('<div>').attr('id', 'preview')
-//                    .appendTo('body')
-//                    .append($('<img>').attr('src', '/photos/' + data.file));
-//                setTimeout(
-//                    function() {
-//                        preview.remove();
-//                    },
-//                    10000
-//                )
-            });
+            socket
+                .on('capture', function(data) {
+                    $('<div>').attr('id', 'overlay').appendTo('body').fadeOut(100, function() {$(this).remove();});
+                })
+                .on('preview', function(data) {
+                    var list = $('#last_caption');
+                    if (list.find('li').length >= 12) {
+                        list.find('li:last').remove();
+                    }
+                    list.prepend(
+                        $('<li>').append($('<img>').attr('src', '/photos/' + data.file))
+                    );
+                });
 
             var countdown, interval;
             function showCountdown() {

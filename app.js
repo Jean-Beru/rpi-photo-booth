@@ -79,21 +79,21 @@ io.on('connection', function(socket) {
 
     socket.on('capture', function() {
         stream.capture(function(err, date, file) {
-            var split = file.split('/');
-            var input = split.pop();
+            var input = file.split('/').pop();
             var output = input.replace(/\.jpg/ig, '_thumb.jpg');
-            var path = split.join('/');
+            var path = config.raspberry.stream.photo.output.split('/').slice(0, -1).join('/');
+
+            io.emit('capture', { file: output });
 
             require('easyimage')
                 .resize({
                     src: path+'/'+input,
                     dst: path+'/'+output,
-                    quality: 75,
                     width: 160,
                     height: 120
                 })
                 .then(
-                    function() { io.emit('capture', { file: output }); },
+                    function() { io.emit('preview', { file: output }); },
                     winston.error
                 );
         });
