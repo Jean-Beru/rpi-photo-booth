@@ -21,7 +21,7 @@
     "i18n": "^0.5",
     "method-override": "^2.3",
     "nodemon": "^1.8",
-    "raspicam": "git://github.com/Jean-Beru/node-raspicam.git",
+    "raspicam": "^0.2",
     "serve-favicon": "^2.3",
     "serve-static": "^1.10",
     "socket.io": "^1.3",
