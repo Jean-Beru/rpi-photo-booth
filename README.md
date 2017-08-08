@@ -10,7 +10,7 @@ git clone https://github.com/Jean-Beru/rpi-photo-booth.git
 cd rpi-photo-booth
 
 # Run server
-npm start
+yarn start
 ```
 
 # Develop on RPI-photo-booth

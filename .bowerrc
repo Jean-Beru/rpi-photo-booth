@@ -1,3 +1,4 @@
 {
-    "directory": "public/assets/libs"
+    "directory": "public/assets/libs",
+    "allow_root": true
 }

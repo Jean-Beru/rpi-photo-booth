@@ -2,13 +2,13 @@ DC = docker-compose
 TOOLS = $(DC) run --rm app
 
 start:
-	@$(DC) run --rm --name takeapic app npm start
+	@$(DC) run --rm --name takeapic app yarn start
 
 install:
-	@$(TOOLS) npm install
+	@$(TOOLS) yarn install
 
 test:
-	@$(TOOLS) npm test
+	@$(TOOLS) yarn test
 
 rm:
 	@$(DC) kill

@@ -1,4 +1,4 @@
-FROM jeanberu/nodejs
+FROM node:8-alpine
 
 RUN mkdir -p /app \
     && apk add --update g++ make python git imagemagick \

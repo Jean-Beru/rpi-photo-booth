@@ -14,7 +14,7 @@ function Stream( opts ) {
         return new Stream( opts );
     }
 
-    var required = ['module', 'preview_path', 'preview', 'photo_path', 'photo'];
+    var required = ['module', 'preview', 'photo'];
     for (var i in required) {
        if ('undefined' === typeof opts || 'undefined' === typeof opts[required[i]]) {
            winston.error('Error: raspberry: must define ' + required[i]);
