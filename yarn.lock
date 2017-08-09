@@ -1993,9 +1993,9 @@ range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-"raspicam@git://github.com/troyth/node-raspicam.git":
+"raspicam@git://github.com/Jean-Beru/node-raspicam.git#fix-watcher-close":
   version "0.2.14"
-  resolved "git://github.com/troyth/node-raspicam.git#58a1d0ac41fa94ec4a4824bc11139d6799cee2f6"
+  resolved "git://github.com/Jean-Beru/node-raspicam.git#adfc254b6417a50b3abb179d15d3ea82d116e7e8"
   dependencies:
     lodash "*"
 
