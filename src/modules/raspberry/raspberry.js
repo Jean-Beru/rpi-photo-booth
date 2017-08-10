@@ -21,7 +21,9 @@ function Stream( opts ) {
        }
     }
 
-    this.opts = {};
+    this.opts = {
+        log: winston.info
+    };
     this.setOpts(opts);
 }
 

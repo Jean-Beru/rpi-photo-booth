@@ -23,7 +23,7 @@
             <div class="last">
                 <ul id="last_caption">
                     {{#last}}
-                        <li><img src="/photos/{{.}}"></li>
+                        <li><img src="/photos/{{.}}" /></li>
                     {{/last}}
                 </ul>
             </div>
