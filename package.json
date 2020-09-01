@@ -10,7 +10,7 @@
     "test": "$(npm bin)/eslint *.js src"
   },
   "dependencies": {
-    "bower": "^1.7",
+    "bower": "^1.8",
     "express": "^4.13",
     "express-session": "^1.12",
     "body-parser": "^1.14",
